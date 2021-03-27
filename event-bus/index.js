@@ -6,16 +6,18 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.post("/events", (req, res) => {
-    const event = req.body;
+app.post('/events', (req, res) => {
+  const event = req.body;
 
-    axios.post("hhtp://localhost:4000/events", event );
-    // axios.post("hhtp://localhost:4001/events",  event );
-    // axios.post("hhtp://localhost:4002/events",  event );
+  console.log(event);
 
-    res.status(201).send({ Status: 'OK' })
+  axios.post('hhtp://localhost:4000/events', event);
+  axios.post('hhtp://localhost:4001/events', event);
+  axios.post('hhtp://localhost:4002/events', event);
+
+  res.status(201).send({ Status: 'OK' });
 });
 
 app.listen(4005, () => {
-    console.log('listening on port 4005')
+  console.log('listening on port 4005');
 });
