@@ -24,9 +24,19 @@ app.post('/events', (req, res) => {
   }
 
   if (type === 'CommentCreated') {
-    const { id, content, postId } = data;
+    const { id, content, postId, Status } = data;
     const post = posts[postId];
-    post.comments.push({ id, content });
+    post.comments.push({ id, content, Status });
+  }
+
+  if (type === 'CommentUpdated') {
+    const { Status, id, postId, content } = data;
+    const post = posts[postId];
+    const comment = post.comment.find((comment) => {
+      return comment.id === id;
+    });
+    comment.Status = Status;
+    comment.content = content;
   }
   res.status(201).send({ Status: 'OK' });
 });
