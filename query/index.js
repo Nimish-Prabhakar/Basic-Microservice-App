@@ -1,10 +1,10 @@
 const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
-app.use(cors());
 app.use(bodyParser.json());
+app.use(cors());
 
 const posts = {};
 
@@ -14,33 +14,37 @@ app.get('/posts', (req, res) => {
 
 app.post('/events', (req, res) => {
   const { type, data } = req.body;
+
   if (type === 'PostCreated') {
     const { id, title } = data;
-    posts[id] = {
-      id,
-      title,
-      comments: [],
-    };
+
+    posts[id] = { id, title, comments: [] };
   }
 
   if (type === 'CommentCreated') {
-    const { id, content, postId, Status } = data;
+    const { id, content, postId, status } = data;
+
     const post = posts[postId];
-    post.comments.push({ id, content, Status });
+    post.comments.push({ id, content, status });
   }
 
   if (type === 'CommentUpdated') {
-    const { Status, id, postId, content } = data;
+    const { id, content, postId, status } = data;
+
     const post = posts[postId];
-    const comment = post.comment.find((comment) => {
+    const comment = post.comments.find(comment => {
       return comment.id === id;
     });
-    comment.Status = Status;
+
+    comment.status = status;
     comment.content = content;
   }
-  res.status(201).send({ Status: 'OK' });
+
+  console.log(posts);
+
+  res.send({});
 });
 
 app.listen(4002, () => {
-  console.log('listening on 4002');
+  console.log('Listening on 4002');
 });
