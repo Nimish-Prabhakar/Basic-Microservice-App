@@ -1,0 +1,107 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comments-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comments
+  template:
+    metadata:
+      labels:
+        app: comments
+    spec:
+      containers:
+        - name: comments
+          image: nishu02/blog_app_1:comment-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts
+  template:
+    metadata:
+      labels:
+        app: posts
+    spec:
+      containers:
+        - name: comments
+          image: nishu02/blog_app_1:posts-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: query-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: query
+  template:
+    metadata:
+      labels:
+        app: query
+    spec:
+      containers:
+        - name: comments
+          image: nishu02/blog_app_1:query-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moderation-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moderation
+  template:
+    metadata:
+      labels:
+        app: moderation
+    spec:
+      containers:
+        - name: comments
+          image: nishu02/blog_app_1:moderation-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-bus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: event-bus
+  template:
+    metadata:
+      labels:
+        app: event-bus
+    spec:
+      containers:
+        - name: comments
+          image: nishu02/blog_app_1:event-bus
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client-ui
+  template:
+    metadata:
+      labels:
+        app: client-ui
+    spec:
+      containers:
+        - name: comments
+          image: nishu02/blog_app_1:client-ui
